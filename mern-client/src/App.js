@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import { useState, useEffect } from 'react';
-import './App.css';
+import {useAuth} from './contexts/AuthContext'
+import Header from './components/Header'
 
-function App() {
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    // Make a GET request to your custom backend
-    fetch('http://localhost:3000/api')
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error:', error));
-  }, []);
+export default function App() {
+  const {isLoggedIn} = useAuth()
 
   return (
-    <div>
-      <h1>Response from Backend:</h1>
-      <p>{data.message}</p>
+    <div className='App'>
+      <Header />
+
+      {isLoggedIn ? <LoggedInText /> : <LoggedOutText />}
     </div>
-  );
+  )
 }
 
-export default App;
+const LoggedInText = () => {
+  const {account} = useAuth()
+  return <p>Hey, {account.username}! I'm happy to let you know: you are authenticated as a {account.role}!</p>
+}
+
+const LoggedOutText = () => (
+  <p>Don't forget to start your backend server, then authenticate yourself.</p>
+)
