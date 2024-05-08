@@ -1,5 +1,6 @@
 import {useAuth} from './contexts/AuthContext'
 import Header from './components/Header'
+import CustomCalendar from './components/Calendar'
 
 export default function App() {
   const {isLoggedIn} = useAuth()
@@ -7,6 +8,7 @@ export default function App() {
   return (
     <div className='App'>
       <Header />
+      <CustomCalendar></CustomCalendar>
 
       {isLoggedIn ? <LoggedInText /> : <LoggedOutText />}
     </div>
