@@ -11,6 +11,9 @@ import {
 import OnlineIndicator from './OnlineIndicator'
 import AuthModal from './AuthModal'
 import {useAuth} from '../contexts/AuthContext'
+import LockIcon from '@mui/icons-material/Lock';
+
+
 
 export default function Header() {
   const {isLoggedIn, account, logout} = useAuth()
@@ -49,6 +52,7 @@ export default function Header() {
       <IconButton onClick={openPopover}>
         <OnlineIndicator online={isLoggedIn}>
           <Avatar src={account?.username || ''} alt={account?.username || ''} />
+          {account?.role === 'admin' && <LockIcon />}
         </OnlineIndicator>
       </IconButton>
 

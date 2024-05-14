@@ -2,6 +2,7 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import * as React from "react";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import "./Calendar.css";
@@ -28,6 +29,11 @@ export default function CustomCalendar() {
   const [holidays, setHolidays] = useState([]);
   const [selected, setSelected] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showBirths, setShowBirths] = useState(true);
+  const [showDeaths, setShowDeaths] = useState(true);
+  const [showEvents, setShowEvents] = useState(true);
+  const [showHolidays, setShowHolidays] = useState(true);
+  const [showSelected, setShowSelected] = useState(true);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
@@ -91,7 +97,104 @@ export default function CustomCalendar() {
             <Typography variant="body1">Loading...</Typography>
           ) : (
             <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-              {events &&
+              <div><Button
+                onClick={() => {
+                  setShowBirths(true);
+                  setShowDeaths(false);
+                  setShowEvents(false);
+                  setShowHolidays(false);
+                  setShowSelected(false);
+                }}
+              >
+                Show Births
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowBirths(false);
+                  setShowDeaths(true);
+                  setShowEvents(false);
+                  setShowHolidays(false);
+                  setShowSelected(false);
+                }}
+              >
+                Show Deaths
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowBirths(false);
+                  setShowDeaths(false);
+                  setShowEvents(true);
+                  setShowHolidays(false);
+                  setShowSelected(false);
+                }}
+              >
+                Show Events
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowBirths(false);
+                  setShowDeaths(false);
+                  setShowEvents(false);
+                  setShowHolidays(true);
+                  setShowSelected(false);
+                }}
+              >
+                Show Holidays
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowBirths(false);
+                  setShowDeaths(false);
+                  setShowEvents(false);
+                  setShowHolidays(false);
+                  setShowSelected(true);
+                }}
+              >
+                Show WikiMedia Select
+              </Button>
+              </div>
+              {showBirths &&
+                births.map((birth) => (
+                  <div
+                    key={hashCode(birth.text)}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <Typography variant="body1" style={{ width: "85%" }}>
+                      {birth.text}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ width: "15%", marginLeft: "10px" }}
+                    >
+                      Year: {birth.year}
+                    </Typography>
+                  </div>
+                ))}
+              {showDeaths && deaths.map((death) => (
+                  <div
+                    key={hashCode(death.text)}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <Typography variant="body1" style={{ width: "85%" }}>
+                      {death.text}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ width: "15%", marginLeft: "10px" }}
+                    >
+                      Year: {death.year}
+                    </Typography>
+                  </div>
+                ))}
+              {showEvents &&
                 events.map((event) => (
                   <div
                     key={hashCode(event.text)}
@@ -109,6 +212,40 @@ export default function CustomCalendar() {
                       style={{ width: "15%", marginLeft: "10px" }}
                     >
                       Year: {event.year}
+                    </Typography>
+                  </div>
+                ))}
+              {showHolidays && holidays.map((holiday) => (
+                  <div
+                    key={hashCode(holiday.text)}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <Typography variant="body1" style={{ width: "100%" }}>
+                      {holiday.text}
+                    </Typography>
+                  </div>
+                ))}
+              {showSelected && selected.map((select) => (
+                  <div
+                    key={hashCode(select.text)}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <Typography variant="body1" style={{ width: "85%" }}>
+                      {select.text}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      style={{ width: "15%", marginLeft: "10px" }}
+                    >
+                      Year: {select.year}
                     </Typography>
                   </div>
                 ))}
